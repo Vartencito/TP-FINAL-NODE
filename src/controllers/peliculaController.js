@@ -30,7 +30,7 @@ router.get('/:id', async (req,res)=>{
     }
 });
 
-router.post('/:id', async (req,res)=>{
+router.post('', async (req,res)=>{
     try{
         const pelicula = req.body;
         const peliculaInsert = peliculaServices.insertPelicula(pelicula);

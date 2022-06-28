@@ -57,13 +57,13 @@ class peliculaServices {
         try{
             let pool    = await sql.connect(config);
             let result  = await pool.request()
-                                    .input ('pId', sql.Int, pelicula.id)
+                                    .input ('pId', sql.Int, pelicula.Id)
                                     .input ('pImagen', sql.VarChar(150), pelicula.Imagen)
                                     .input ('pTitulo', sql.VarChar(50), pelicula.Titulo)
                                     .input ('pFechaCreacion', sql.Int, pelicula.FechaCreacion)
                                     .input ('pCalificacion', sql.Float, pelicula.Calificacion)
                                     .query ('UPDATE Pelicula SET Imagen = @pImagen, Titulo = @pTitulo, FechaCreacion = @pFechaCreacion, Calificacion = @pCalificacion WHERE Id = @pId');
-                returnEntity = result.recordsets;
+            returnEntity = result.recordsets;
         }
         catch(error){
             console.log(error);

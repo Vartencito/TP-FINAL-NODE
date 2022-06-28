@@ -8,9 +8,10 @@ const personaje = new Personaje();
 
 router.get('', async(req,res)=>{
     try{
-        const personaje = await personajeServices.getAll();
-        return res.status(200).json(personaje);
+        const personajeGet = await personajeServices.getAll();
+        return res.status(200).json(personajeGet);
     } catch (error){
+        console.log(error);
         return res.status(400).send('error en el server');
     }
 });
@@ -29,7 +30,7 @@ router.get('/:id', async (req,res)=>{
     }
 });
 
-router.post('/:id', async (req,res)=>{
+router.post('', async (req,res)=>{
 
     try{
         const personaje = req.body;
@@ -44,9 +45,10 @@ router.post('/:id', async (req,res)=>{
 router.put('/:id',async(req,res)=>{
     try{
         const personaje = req.body;
-        const personajeUpdate = await personajeServices.updatePelicula(personaje);
+        const personajeUpdate = await personajeServices.updatePersonaje(personaje);
         return res.status(200).json(personajeUpdate);
     } catch (error){
+        console.log(error)
         return res.status(400).send('error en el server');
     }
 })

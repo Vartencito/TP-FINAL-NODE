@@ -5,7 +5,6 @@ class Personaje {
     Edad;
     Peso;
     Historia;
-    PeliculasAsoc;
 }
 
 export default Personaje; 

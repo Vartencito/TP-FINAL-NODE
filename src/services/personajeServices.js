@@ -9,12 +9,12 @@ class personajeServices {
         try{
             let pool = await sql.connect(config);
             const result = await pool.request()
-                                     .query('SELECT * FROM Personaje');
+            .query('SELECT * FROM Personaje');
             personajes = result.recordsets;    
         }catch(error){
             console.log(error);
         }
-        return peliculas;
+        return personajes;
     }
 
     getPersonajeById = async (id)=>{
@@ -28,7 +28,7 @@ class personajeServices {
         } catch (error){
             console.log(error);
         }
-        return pelicula;
+        return personaje;
     }
 
     insertPersonaje = async (personaje)=>{
@@ -58,13 +58,13 @@ class personajeServices {
         try{
             let pool    = await sql.connect(config);
             let result  = await pool.request()
+            .input ("pId", sql.Int, personaje.Id)
             .input ('pImagen', sql.VarChar(150), personaje.Imagen)
             .input ('pNombre', sql.VarChar(50), personaje.Nombre)
             .input ('pEdad', sql.Int, personaje.Edad)
             .input ('pPeso', sql.Float, personaje.Peso)
             .input ('pHistoria', sql.VarChar(350), personaje.Historia)
-            .query (`UPDATE INTO Personaje (Imagen, Nombre, Edad, Peso, Historia)
-                    VALUES (@pImagen, @pNombre, @pEdad, @pPeso, @pHistoria)`);
+            .query ('UPDATE Personaje SET Imagen = @pImagen, Nombre = @pNombre, Edad = @pEdad, Peso = @pPeso, Historia = @pHistoria WHERE Id = @pId');
                 returnEntity = result.recordsets;
         }
         catch(error){
