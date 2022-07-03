@@ -10,7 +10,7 @@ class peliculaServices {
             let pool = await sql.connect(config);
             const result = await pool.request()
                                      .query('SELECT * FROM Pelicula');
-            peliculas = result.recordsets;    
+            peliculas = result.recordsets[0];    
         }catch(error){
             console.log(error);
         }
@@ -23,7 +23,22 @@ class peliculaServices {
             let pool    = await sql.connect(config);
             let result  = await pool.request()
                                 .input ('pId', sql.Int, id)
-                                .query ('SELECT * FROM Pelicula WHERE id = @pId');
+                                .query (`SELECT 
+                                        Pelicula.Imagen AS PeliculaImagen, 
+                                        Pelicula.Calificacion AS PeliculaCalificacion, 
+                                        Pelicula.FechaCreacion AS PeliculaFechaCreacion, 
+                                        Pelicula.Titulo AS PeliculaTitulo, 
+                                        Personaje.Edad AS PersonajeEdad, 
+                                        Personaje.Historia AS PersonajeHistoria, 
+                                        Personaje.Imagen AS PersonajeImagen,
+                                        Personaje.Nombre AS PersonajeNombre, 
+                                        Personaje.Peso AS PersonajePeso
+                                        FROM Pelicula 
+                                        INNER JOIN PersonajesXPeliculas
+                                        INNER JOIN Personaje
+                                        ON Personaje.Id = PersonajesXPeliculas.IdPersonaje
+                                        ON Pelicula.Id = PersonajesXPeliculas.IdPelicula
+                                        WHERE Pelicula.Id = @pId`);
             pelicula = result.recordsets [0][0];
         } catch (error){
             console.log(error);

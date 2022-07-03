@@ -23,7 +23,22 @@ class personajeServices {
             let pool    = await sql.connect(config);
             let result  = await pool.request()
                                 .input ('pId', sql.Int, id)
-                                .query ('SELECT * FROM Personaje WHERE id = @pId');
+                                .query (`SELECT 
+                                        Personaje.Edad AS EdadPersonaje, 
+                                        Personaje.Historia AS HistoriaPersonaje,
+                                        Personaje.Imagen AS ImagenPersonaje,
+                                        Personaje.Nombre AS NombrePersonaje,
+                                        Personaje.Peso AS PesoPersonaje,
+                                        Pelicula.Calificacion AS CalificacionPelicula,
+                                        Pelicula.FechaCreacion AS FechaCreacionPelicula,
+                                        Pelicula.Imagen AS ImagenPelicula,
+                                        Pelicula.Titulo AS TituloPelicula
+                                        FROM Personaje
+                                        INNER JOIN PersonajesXPeliculas
+                                        INNER JOIN Pelicula
+                                        ON Pelicula.Id = PersonajesXPeliculas.IdPelicula
+                                        ON Personaje.Id = PersonajesXPeliculas.IdPersonaje
+                                        WHERE Personaje.Id=@pId`);
             personaje = result.recordsets [0][0];
         } catch (error){
             console.log(error);
