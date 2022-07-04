@@ -14,6 +14,8 @@ class personajeServices {
     // AND Personaje.Nombre like 'A%'
     // and Pelicula.Titulo like 'A%'
 
+    //poner las querys de pelicula services y de personaje services
+
     getAll = async (edad, nombre, movieTitle) => {
 
         let personajes = null
@@ -35,7 +37,6 @@ class personajeServices {
         try {
             let pool = await sql.connect(config);
             const result = await pool.request()
-                .input('pEdad', sql.Int, edad)
                 .query(query);
             personajes = result.recordsets;
         } catch (error) {
