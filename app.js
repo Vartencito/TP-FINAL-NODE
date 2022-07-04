@@ -12,37 +12,37 @@ app.listen(app.get('port'));
 
 console.log("server en el puerto: ",app.get('port'));
 
-// const takeToken =(req, res, next)=>{
-//     const bearerHeader = req.headers['authorization'];
-//     console.log("estoy aca")
-//     if(typeof bearerHeader === 'undefined'){
-
-//         const bearer = bearerHeader.split(' ');
-//         const bearerToken = bearer[1];
-//         req.token = bearerToken;
-//         next();
-//     } else{
-//         res.sendStatus(403)
-//     }
-// }
+const takeToken =(req, res, next)=>{
+    const bearerHeader = req.headers['token'];
+    console.log("estoy aca")
+    console.log(bearerHeader);
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[1];
+        req.token = bearerToken;
+        next();
+    } else{
+        res.sendStatus(403)
+    }
+}
 
 const verifyToken =(req,res,next)=>{
-    console.log(req.token)
-    jwt.verify(req.token, 'secretkey', (err, authData) =>{
+    const bearerHeader = req.headers['token'];
+    console.log("hola")
+    console.log(bearerHeader)
+    jwt.verify(bearerHeader, 'secretkey', (err, authData) =>{
         if(err) {
             res.sendStatus(403);
         } else{
-            res.json({
-                authData
-            })
             next();
         }
     })
+    console.log("termine")
 }
 
 app.use(express.json());
-app.use("/movies", verifyToken, peliculaController);
-app.use("/characters", verifyToken,personajeController);
+app.use("/movies", takeToken, verifyToken, peliculaController);
+app.use("/characters", takeToken,verifyToken,personajeController);
 app.use("/auth/login", usersController);
 app.use(express.urlencoded({ extended: false }));
 
