@@ -5,7 +5,7 @@ import sql from 'mssql';
 class peliculaServices {
 
     getAll = async ()=>{
-        let peliculas = null
+
         try{
             let pool = await sql.connect(config);
             const result = await pool.request()

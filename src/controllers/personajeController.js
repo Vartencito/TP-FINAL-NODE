@@ -7,8 +7,13 @@ const personajeServices = new PersonajeServices();
 const personaje = new Personaje();
 
 router.get('', async(req,res)=>{
+
+    const nombre = req.query.nombre;
+    const edad = req.query.edad;
+    const movieTitle = req.query.movieTitle
+
     try{
-        const personajeGet = await personajeServices.getAll();
+        const personajeGet = await personajeServices.getAll(edad, nombre, movieTitle);
         return res.status(200).json(personajeGet);
     } catch (error){
         console.log(error);

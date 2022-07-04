@@ -7,6 +7,7 @@ const peliculaServices = new PeliculaServices();
 const pelicula = new Pelicula();
 
 router.get('', async(req,res)=>{
+
     try{
         const pelicula = await peliculaServices.getAll();
         return res.status(200).json(pelicula);
