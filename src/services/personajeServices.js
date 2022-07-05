@@ -23,8 +23,8 @@ class personajeServices {
 
         if (edad != null || nombre != null || movieTitle != null) {
             if (movieTitle != null) {
-                query += "AND  Titulo" + movieTitle;
-                query += "WHERE 1=1 ";
+                query += "INNER JOIN PersonajesXPeliculas ON Personaje.Id = PersonajesXPeliculas.IdPersonaje INNER JOIN Pelicula ON Pelicula.Id = PersonajesXPeliculas.IdPelicula WHERE 1=1 ";
+                query += `AND  Titulo LIKE ${movieTitle}%`;
             }
             if (edad != null) {
                 query += `AND  Edad = ${edad}`;

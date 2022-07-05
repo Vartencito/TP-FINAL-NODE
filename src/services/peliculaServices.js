@@ -4,12 +4,18 @@ import sql from 'mssql';
 
 class peliculaServices {
 
-    getAll = async ()=>{
+    getAll = async (titulo)=>{
+
+        let query = `SELECT * FROM Pelicula WHERE 1 = 1`;
+
+        if (titulo !== null) {
+            query += `AND Titulo LIKE ${titulo}`;
+        }
 
         try{
             let pool = await sql.connect(config);
             const result = await pool.request()
-                                     .query('SELECT * FROM Pelicula');
+                                     .query(query);
             peliculas = result.recordsets[0];    
         }catch(error){
             console.log(error);
