@@ -4,14 +4,20 @@ import sql from 'mssql';
 
 class peliculaServices {
 
-    getAll = async (titulo)=>{
+    getAll = async (titulo,orden)=>{
 
         let query = `SELECT * FROM Pelicula WHERE 1 = 1`;
         let peliculas = null;
 
+
         if (titulo !== undefined) {
-            query += `AND Titulo LIKE "%${titulo}%"`;
+            query += ` AND Titulo LIKE '%${titulo}%'`;
         }
+        if(orden){
+            if(orden != "ASC") orden = "DESC"
+            query += `ORDER BY Titulo ${orden}`
+        }
+        console.log(query);
 
         try{
             let pool = await sql.connect(config);

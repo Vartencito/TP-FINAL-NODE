@@ -19,19 +19,17 @@ class personajeServices {
     getAll = async (edad, nombre, movieTitle) => {
 
         let personajes = null
-        let query = `SELECT * FROM Personaje `;
+        let query = `SELECT Personaje.*, Pelicula.Titulo FROM Personaje INNER JOIN PersonajesXPeliculas ON Personaje.Id = PersonajesXPeliculas.IdPersonaje INNER JOIN Pelicula ON Pelicula.Id = PersonajesXPeliculas.IdPelicula WHERE 1=1 `;
 
-        if (edad != null || nombre != null || movieTitle != null) {
-            if (movieTitle != null) {
-                query += "INNER JOIN PersonajesXPeliculas ON Personaje.Id = PersonajesXPeliculas.IdPersonaje INNER JOIN Pelicula ON Pelicula.Id = PersonajesXPeliculas.IdPelicula WHERE 1=1 ";
-                query += `AND  Titulo LIKE ${movieTitle}%`;
-            }
-            if (edad != null) {
-                query += `AND  Edad = ${edad}`;
-            }
-            if (nombre != null) {
-                query += `AND  Nombre LIKE ${nombre}%`;
-            }
+
+        if (movieTitle) {
+            query += `AND  Titulo LIKE '${movieTitle}%'`;
+        }
+        if (edad) {
+            query += `AND  Edad = ${edad}`;
+        }
+        if (nombre) {
+            query += `AND  Nombre LIKE '${nombre}%'`;
         }
 
         try {

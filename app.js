@@ -13,6 +13,7 @@ app.listen(app.get('port'));
 console.log("server en el puerto: ",app.get('port'));
 
 const takeToken =(req, res, next)=>{
+    
     const bearerHeader = req.headers['token'];
     console.log("estoy aca")
     console.log(bearerHeader);

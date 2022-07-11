@@ -14,7 +14,7 @@ router.post('', async (req, res) => {
         if(userToken == null) {
             return res.status(404).send('usuario o contraseña incorrectos');
         }
-        jwt.sign({user: userToken},'secretkey',  {expiresIn: '5m'},(err, token)=>{
+        jwt.sign({user: userToken},'secretkey',  {expiresIn: '2000s'},(err, token)=>{
             res.json({
                 token: token
             })

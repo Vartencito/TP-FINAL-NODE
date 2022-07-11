@@ -8,11 +8,11 @@ const pelicula = new Pelicula();
 
 router.get('', async(req,res)=>{
 
-    const titulo = req.query.titulo;
+    const {titulo, orden}= req.query
 
     try{
         
-        const pelicula = await peliculaServices.getAll(titulo);
+        const pelicula = await peliculaServices.getAll(titulo, orden);
         console.log("a");
         return res.status(200).json(pelicula);
     
