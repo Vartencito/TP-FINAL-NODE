@@ -11,11 +11,14 @@ router.get('', async(req,res)=>{
     const titulo = req.query.titulo;
 
     try{
+        
         const pelicula = await peliculaServices.getAll(titulo);
+        console.log("a");
         return res.status(200).json(pelicula);
     
     } catch (error){
-        return res.status(400).send('error en el server');
+        console.log(error);
+        return res.status(400).send(error);
     }
 });
 

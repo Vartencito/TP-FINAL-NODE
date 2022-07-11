@@ -7,12 +7,14 @@ const user = new usersServices();
 
 router.post('', async (req, res) => {
     try{
+        console.log(req.body);
         const {username,password} = req.body;
+        console.log(username);
         const userToken = await user.searchUser(username, password);
         if(userToken == null) {
             return res.status(404).send('usuario o contraseña incorrectos');
         }
-        jwt.sign({user: userToken},'secretkey',  {expiresIn: '300s'},(err, token)=>{
+        jwt.sign({user: userToken},'secretkey',  {expiresIn: '5m'},(err, token)=>{
             res.json({
                 token: token
             })

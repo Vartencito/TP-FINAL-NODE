@@ -7,13 +7,15 @@ class peliculaServices {
     getAll = async (titulo)=>{
 
         let query = `SELECT * FROM Pelicula WHERE 1 = 1`;
+        let peliculas = null;
 
-        if (titulo !== null) {
-            query += `AND Titulo LIKE ${titulo}`;
+        if (titulo !== undefined) {
+            query += `AND Titulo LIKE "%${titulo}%"`;
         }
 
         try{
             let pool = await sql.connect(config);
+            console.log(pool);
             const result = await pool.request()
                                      .query(query);
             peliculas = result.recordsets[0];    

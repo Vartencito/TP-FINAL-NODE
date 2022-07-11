@@ -32,7 +32,7 @@ const verifyToken =(req,res,next)=>{
     console.log(bearerHeader)
     jwt.verify(bearerHeader, 'secretkey', (err, authData) =>{
         if(err) {
-            res.sendStatus(403);
+            res.status(403).json(err);
         } else{
             next();
         }
